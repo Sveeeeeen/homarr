@@ -23,7 +23,7 @@ env:
   SKIP_ENV_VALIDATION: true
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
-  GHCR_REPO: ghcr.io/${{ github.repository }}
+  GHCR_REPO: ghcr.io/sveeeeeen/homarr
   TURBO_TELEMETRY_DISABLED: 1
 
 concurrency:
@@ -284,6 +284,7 @@ jobs:
           gh release edit --repo ${{ github.repository }} ${{ needs.release.outputs.version }} --draft=false
 
       - name: Discord notification
+        if: github.event_name != 'workflow_dispatch' || inputs.send-notifications
         env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
         uses: Ilshidur/action-discord@0.4.0
